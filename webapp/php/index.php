@@ -161,8 +161,8 @@ $app->get('/', function () use ($app) {
         'SELECT * FROM tweet WHERE USER_ID IN (SELECT follow_id FROM follow WHERE USER_ID = ?) OR USER_ID = ? ORDER BY created_at DESC LIMIT 100',
         array($current_user['id'], $current_user['id']))->fetchAll();
 
-    $following = db_execute('SELECT * FROM follow WHERE user_id = ?', array($current_user['id']))->fetchAll();
-    $followers = db_execute('SELECT * FROM follow WHERE follow_id = ?', array($current_user['id']))->fetchAll();
+    $following = db_execute('SELECT COUNT(1) as c FROM follow WHERE user_id = ?', array($current_user['id']))->fetchAll();
+    $followers = db_execute('SELECT COUNT(1) as c FROM follow WHERE follow_id = ?', array($current_user['id']))->fetchAll();
 
     $locals = array(
         'user' => current_user(),

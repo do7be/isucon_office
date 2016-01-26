@@ -4,8 +4,8 @@
     <dl>
       <dt>name</dt><dd id="prof-name"><?php h($user['name']) ?></dd>
       <dt>email</dt><dd id="prof-email"><?php h($user['email']) ?></dd>
-      <dt>following</dt><dd id="prof-following"><a href="/following"><?php h(count($following)) ?></a></dd>
-      <dt>followers</dt><dd id="prof-followers"><a href="/followers"><?php h(count($followers)) ?></a></dd>
+      <dt>following</dt><dd id="prof-following"><a href="/following"><?php h($following[0]['c']) ?></a></dd>
+      <dt>followers</dt><dd id="prof-followers"><a href="/followers"><?php h($followers[0]['c']) ?></a></dd>
     </dl>
   </div>
 
