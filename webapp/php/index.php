@@ -214,14 +214,9 @@ $app->post('/follow/:user_id', function ($user_id) use ($app) {
 
 $app->get('/followers', function () use ($app) {
     authenticated();
-    $followers = db_execute('SELECT * FROM follow WHERE follow_id = ?', array(current_user()['id']))->fetchAll();
-    $followers_user = array();
-    foreach($followers as $f) {
-        $user = db_execute('SELECT * FROM user WHERE id = ?', array($f['user_id']))->fetch();
-        $followers_user[] = $user;
-    }
+    $followers = db_execute('SELECT u.id as id, u.name as name, u.created_at as created_at FROM follow as f, user as u WHERE f.follow_id = ? AND u.id=f.user_id', array(current_user()['id']))->fetchAll();
     $locals = array(
-        'followers' => $followers_user,
+        'followers' => $followers,
     );
     $app->render('followers.php', $locals);
 });
