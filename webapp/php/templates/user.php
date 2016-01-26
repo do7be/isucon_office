@@ -13,9 +13,8 @@
 <?php } ?>
 <?php foreach ($tweets as $tweet) { ?>
 <div class="tweet">
-  <?php $tweet_user = get_user($tweet['user_id']) ?>
   <div class="user">
-    <a href="/user/<?php h($tweet_user['id']) ?>"><?php h($tweet_user['name']) ?></a>
+    <a href="/user/<?php h($tweet['user_id']) ?>"><?php h($user['name']) ?></a>
   </div>
   <div class="tweet">
     <?php foreach (preg_split('/\n/', $tweet['content']) as $line) { ?>
