@@ -129,6 +129,16 @@ function get_user($user_id)
     return $user;
 }
 
+function get_users()
+{
+    $users = db_execute('SELECT * FROM user')->fetchAll();
+    $users_names= array();
+    foreach($users as $user_name){
+        $users_names[$user_name['id']] = $user_name['name'];
+    }
+    return $users_names;
+}
+
 function is_follow($follow_id)
 {
     $user_id = $_SESSION['user_id'];
@@ -164,11 +174,14 @@ $app->get('/', function () use ($app) {
     $following = db_execute('SELECT COUNT(1) as c FROM follow WHERE user_id = ?', array($current_user['id']))->fetchAll();
     $followers = db_execute('SELECT COUNT(1) as c FROM follow WHERE follow_id = ?', array($current_user['id']))->fetchAll();
 
+    $users_names = get_users();
+
     $locals = array(
-        'user' => current_user(),
+        'user' => $current_user,
         'tweets' => $tweets,
         'following' => $following,
         'followers' => $followers,
+        'users_names' => $users_names,
     );
     $app->render('index.php', $locals);
 });
